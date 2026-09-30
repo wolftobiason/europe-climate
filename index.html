@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Europe year-round climate — °F dashboard</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  :root { --bg:#f4efe6; --ink:#1c1917; --muted:#57534e; --card:#fffdf8; --line:#e4d9c8; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Georgia,"Iowan Old Style",serif; background:var(--bg); color:var(--ink); }
+  header { max-width:1180px; margin:0 auto; padding:40px 24px 8px; }
+  h1 { font-weight:400; font-size:clamp(28px,4.2vw,46px); letter-spacing:-.03em; margin:0 0 10px; }
+  .lede { font-size:18px; color:var(--muted); max-width:760px; line-height:1.5; margin:0; }
+  .toolbar { max-width:1180px; margin:18px auto 0; padding:0 24px; display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; }
+  .seg { display:flex; background:var(--card); border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .seg button { border:0; background:transparent; font:13px/1 Georgia,serif; padding:8px 14px; cursor:pointer; color:var(--muted); }
+  .seg button.on { background:#1c1917; color:#faf6ef; }
+  .month-row { display:flex; flex-wrap:wrap; gap:4px; }
+  .month-row button { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:6px 9px; font:12px/1 Georgia,serif; cursor:pointer; }
+  .month-row button.on { background:#9a3412; color:#fff; border-color:#9a3412; }
+  #eumap { max-width:1180px; height:680px; margin:8px auto 0; }
+  .hint, footer { max-width:1180px; margin:4px auto 16px; padding:0 24px; font-size:13px; color:#78716c; line-height:1.5; }
+  section { max-width:1180px; margin:0 auto; padding:4px 12px 10px; }
+  h2 { font-weight:400; font-size:26px; margin:28px 12px 8px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:14px; padding:0 12px 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px 10px; }
+  .card-top { border-left:4px solid; padding-left:10px; }
+  .card h3 { margin:0; font-size:17px; }
+  .region { margin:2px 0 0; color:#a16207; font-size:12.5px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0 8px; }
+  .stats div { background:#f7f1e6; border-radius:8px; padding:6px 8px; }
+  .stats span { display:block; font-size:11px; color:#78716c; }
+  .stats b { font-size:16px; }
+  dt { font-size:11px; letter-spacing:.04em; text-transform:uppercase; color:#78716c; margin-top:8px; }
+  dd { margin:2px 0 0; font-size:14px; line-height:1.4; }
+  footer { margin-bottom:48px; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>A year across Europe, in Fahrenheit</h1>
+  <p class="lede">Typical monthly climate for Italy and the Nordics — temperature, sunshine, and rain — pinned to the map. Charts include San Francisco, New York, and Dallas as references. Sunshine line chart: Palermo, Copenhagen, Stockholm, SF.</p>
+</header>
+<div class="toolbar">
+  <div class="seg" id="metricSeg">
+    <button class="on" data-metric="temp">Temperature °F</button>
+    <button data-metric="sun">Sunshine hrs/day</button>
+    <button data-metric="rain">Rain inches</button>
+  </div>
+  <div class="month-row" id="monthRow"></div>
+</div>
+<div id="eumap"></div>
+<p class="hint">Dot size and color follow the selected metric. Hover a city for high / low / sun / rain. Scroll to zoom, drag to pan. Long-run average, not a forecast.</p>
+<section>
+  <h2>Temperature</h2><div id="heat"></div><div id="range"></div>
+  <h2>Sunshine</h2><div id="sunheat"></div><div id="sunline"></div>
+  <h2>Rain and seasonal swing</h2><div id="precip"></div><div id="season"></div>
+</section>
+<h2 style="max-width:1180px;margin:28px auto 8px;padding:0 24px;">How it feels</h2>
+<div class="grid" id="cards"></div>
+<footer>City climatological normals in °F. Precipitation in inches. Sunshine is mean monthly bright-sunshine hours.</footer>
+<script src="app.js"></script>
+</body>
+</html>
